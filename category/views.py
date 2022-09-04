@@ -13,9 +13,10 @@ class CategoryListView(ListView):
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
+        all_categories = self.object_list.all().order_by("name")
 
         response = []
-        for i in self.object_list:
+        for i in all_categories:
             response.append(
                 {
                     "id": i.id,
@@ -49,12 +50,13 @@ class CategoryCreateView(CreateView):
         new_cat = json.loads(request.body)
 
         category = Category.objects.create(
+            id=new_cat["id"],
             name=new_cat["name"],
         )
 
         return JsonResponse({
-            "id": category["id"],
-            "name": category["name"],
+            "id": category.id,
+            "name": category.name
         })
 
 
