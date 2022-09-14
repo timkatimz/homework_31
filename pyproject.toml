@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "homework-29"
+version = "0.1.0"
+description = ""
+authors = ["tim <timrhymer@ya.ru>"]
+readme = "README.md"
+packages = [{include = "homework_29"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "^4.1.1"
+djangorestframework = "^3.13.1"
+djangorestframework-simplejwt = "^5.2.0"
+psycopg2-binary = "^2.9.3"
+Pillow = "^9.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
