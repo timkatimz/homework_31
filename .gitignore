@@ -1,2 +1,6 @@
 /venv
 /.idea
+ads/migrations
+users/migrations
+selection/migrations
+category/migrations

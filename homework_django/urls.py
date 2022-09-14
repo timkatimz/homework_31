@@ -13,6 +13,7 @@ urlpatterns = [
     path('ads/', include("ads.urls")),
     path('cat/', include("category.urls")),
     path('user/', include("users.urls")),
+    path('selection/', include("selection.urls")),
 ]
 
 

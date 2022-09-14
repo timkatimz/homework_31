@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 # Create your models here.
@@ -16,7 +17,7 @@ class Location(models.Model):
         return self.name
 
 
-class User(models.Model):
+class User(AbstractUser):
 
     class Role(models.TextChoices):
         ADMIN = 'admin', 'Администратор'
@@ -26,9 +27,9 @@ class User(models.Model):
     first_name = models.CharField(max_length=100, null=True, blank=True)
     last_name = models.CharField(max_length=100, null=True, blank=True)
     username = models.CharField(max_length=100, unique=True)
-    password = models.SlugField(max_length=20)
+    password = models.SlugField(max_length=255)
     role = models.CharField(max_length=10, choices=Role.choices, default=Role.MEMBER)
-    age = models.SmallIntegerField()
+    age = models.SmallIntegerField(null=True)
     locations = models.ManyToManyField(Location)
 
     class Meta:
