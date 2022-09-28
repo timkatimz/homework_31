@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from rest_framework import serializers
 
 from ads.models import Ads
@@ -29,9 +30,14 @@ class AdDetailSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+def check_is_published(value: bool):
+    if value:
+        raise ValidationError("Неверное значение")
+
+
 class AdCreateSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
-
+    is_published = serializers.BooleanField(validators=[check_is_published])
     class Meta:
         model = Ads
         fields = ['id', "name", "author", "price", "description", "is_published", "image", "category"]

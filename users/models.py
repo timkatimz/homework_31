@@ -1,7 +1,20 @@
+from datetime import date
+
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.db import models
 
-# Create your models here.
+
+def check_non_rambler_domain(value: str):
+    if 'rambler.ru' in value:
+        raise ValidationError("Неверное значение. Домен Rambler не поддерживается")
+
+
+def check_birth_date(value):
+    today_year = date.today().year
+    value = today_year - value.year
+    if value < 9:
+        raise ValidationError("Неверное значение")
 
 
 class Location(models.Model):
@@ -30,6 +43,8 @@ class User(AbstractUser):
     password = models.SlugField(max_length=255)
     role = models.CharField(max_length=10, choices=Role.choices, default=Role.MEMBER)
     age = models.SmallIntegerField(null=True)
+    birth_date = models.DateField(null=True, validators=[check_birth_date])
+    email = models.EmailField(unique=True, validators=[check_non_rambler_domain], null=True)
     locations = models.ManyToManyField(Location)
 
     class Meta:
